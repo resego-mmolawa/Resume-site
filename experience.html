@@ -12,8 +12,14 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta name="description" content="Your website description goes here.">
+    <script>
+        // Apply dark mode immediately to prevent FOUC
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
     <!-- Navbar -->
     <nav class="bg-white shadow-md p-4 sticky top-0 z-50 border-b border-gray-200">
         <div class="container mx-auto flex justify-between items-center">
