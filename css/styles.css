@@ -43,6 +43,10 @@ body {
     border-color: #0a2540;
 }
 
+.dark .border-navy {
+    border-color: var(--text-color);
+}
+
 a:hover {
     transition: color 0.3s ease-in-out;
 }
