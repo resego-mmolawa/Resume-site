@@ -60,28 +60,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Check for saved preference, otherwise use system preference
-    const userPreference = localStorage.getItem('darkMode');
-    if (userPreference === 'enabled') {
-        setDarkMode(true);
-    } else if (userPreference === 'disabled') {
-        setDarkMode(false);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setDarkMode(true);
-    }
+    const initializeDarkMode = () => {
+        const userPreference = localStorage.getItem('darkMode');
+        if (userPreference === 'enabled') {
+            setDarkMode(true);
+        } else if (userPreference === 'disabled') {
+            setDarkMode(false);
+        } else {
+            // No preference saved, use system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setDarkMode(true);
+            } else {
+                setDarkMode(false);
+            }
+        }
+    };
 
     darkModeToggle.addEventListener('click', () => {
-        const isDark = body.classList.toggle('dark');
+        const isCurrentlyDark = body.classList.contains('dark');
+        const isDark = !isCurrentlyDark;
         setDarkMode(isDark);
         localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
     });
 
     // Listen for changes in system preference
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (localStorage.getItem('darkMode') === null) {
+        // Only change if no manual preference is set
+        if (!localStorage.getItem('darkMode')) {
             setDarkMode(e.matches);
         }
     });
+
+    initializeDarkMode();
 
     const menuBtn = document.getElementById('menu-btn');
     const menu = document.getElementById('menu');
