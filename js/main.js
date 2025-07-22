@@ -48,23 +48,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const moonIcon = document.getElementById('moon-icon');
     const sunIcon = document.getElementById('sun-icon');
 
-    // Check for saved dark mode preference
-    if (localStorage.getItem('darkMode') === 'enabled') {
-        body.classList.add('dark');
-        moonIcon.classList.add('hidden');
-        sunIcon.classList.remove('hidden');
+    const setDarkMode = (isDark) => {
+        if (isDark) {
+            body.classList.add('dark');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        } else {
+            body.classList.remove('dark');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
+        }
+    };
+
+    // Check for saved preference, otherwise use system preference
+    const userPreference = localStorage.getItem('darkMode');
+    if (userPreference === 'enabled') {
+        setDarkMode(true);
+    } else if (userPreference === 'disabled') {
+        setDarkMode(false);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setDarkMode(true);
     }
 
     darkModeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark');
-        moonIcon.classList.toggle('hidden');
-        sunIcon.classList.toggle('hidden');
+        const isDark = body.classList.toggle('dark');
+        setDarkMode(isDark);
+        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    });
 
-        // Save dark mode preference
-        if (body.classList.contains('dark')) {
-            localStorage.setItem('darkMode', 'enabled');
-        } else {
-            localStorage.removeItem('darkMode');
+    // Listen for changes in system preference
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (localStorage.getItem('darkMode') === null) {
+            setDarkMode(e.matches);
         }
     });
 
