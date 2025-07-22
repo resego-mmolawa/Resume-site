@@ -45,14 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
 
     // Check for saved dark mode preference
     if (localStorage.getItem('darkMode') === 'enabled') {
         body.classList.add('dark');
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
     }
 
     darkModeToggle.addEventListener('click', () => {
         body.classList.toggle('dark');
+        moonIcon.classList.toggle('hidden');
+        sunIcon.classList.toggle('hidden');
 
         // Save dark mode preference
         if (body.classList.contains('dark')) {
