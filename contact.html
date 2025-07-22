@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Professional Resume</title>
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- External CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Google Fonts (deferred) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+    <!-- External CSS (deferred) -->
+    <link rel="stylesheet" href="css/styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" media="print" onload="this.media='all'" />
     <meta name="description" content="Your website description goes here.">
     <script>
         // Apply dark mode immediately to prevent FOUC
@@ -18,6 +20,31 @@
             document.documentElement.classList.add('dark');
         }
     </script>
+    <!-- Critical CSS -->
+    <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #0a2540;
+            --bg-secondary-color: #f9fafb;
+        }
+        .dark {
+            --bg-color: #0a2540;
+            --text-color: #fff;
+            --bg-secondary-color: #111827;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .bg-navy { background-color: #0a2540; }
+        .text-navy { color: #0a2540; }
+        nav {
+            background-color: var(--bg-color);
+            border-bottom-color: #e5e7eb;
+        }
+        .dark nav { background-color: #111827; }
+    </style>
 </head>
 <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
     <!-- Navbar -->
@@ -95,11 +122,13 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
     <script>
-      AOS.init();
+      document.addEventListener('DOMContentLoaded', function () {
+        AOS.init();
+      });
     </script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
