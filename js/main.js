@@ -78,4 +78,5 @@ document.addEventListener('DOMContentLoaded', () => {
             menu.classList.toggle('hidden');
         });
     }
+
 });
